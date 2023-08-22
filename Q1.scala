@@ -1,23 +1,24 @@
-object Q1_9{
+class Rational(n: Int, d: Int) {
+  require(d != 0, "Denominator must be nonzero")
 
-    class rational(number: Int){
-        def nu = number
-        def neg()= -number
-    }
+  private val gcdVal = gcd(n.abs, d.abs)
+  val numer: Int = n / gcdVal
+  val denom: Int = d / gcdVal
 
-    def main(args: Array[String]):Unit={
-        val in = scala.io.StdIn.readLine("Enter value to turn into negative: ")
-        val numm: Array[String] = in.split("/")
-        val num = numm.map(_.toInt)
+  private def gcd(a: Int, b: Int): Int = if (b == 0) a else gcd(b, a % b)
 
-        if(num(1) != 0){
-            if(num(0) == 0){
-                println("0")
-            }
-            else{
-                val rat1 = new rational(num(0))
-                println("Negative value is "+ rat1.neg()+"/"+num(1))
-            }   
-        }
-    }
+  def neg: Rational = new Rational(-numer, denom)
+
+  override def toString: String = s"$numer / $denom"
+}
+
+object Rational {
+  def apply(n: Int, d: Int): Rational = new Rational(n, d)
+}
+
+// Example usage
+object main extends App {
+    val x = Rational(3, 4)
+    val negX = x.neg
+    println(negX)
 }
